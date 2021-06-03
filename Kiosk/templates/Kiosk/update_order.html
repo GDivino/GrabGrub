@@ -1,0 +1,49 @@
+{% extends 'Kiosk/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for message in messages %}
+<div class="form-group">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<div class="col">
+	<div class="card form_card">
+		<div class="card-header">
+			<h5 class="card-title">Update Order Details</h5>
+		</div>
+		<div class="card-body">
+			<form method="POST" action="{% url 'update_order' pk=o.pk %}">{% csrf_token %}
+				<div class="form-group">
+					<label for="food">Food: </label>
+					<input type="text" value="{{ o.food.name }}" disabled>
+				</div>
+				<div class="form-group">
+					<label for="cust_order">Customer: </label>
+					<input type="text" value="{{ o.cust_order.name }}" disabled>
+				</div>
+				<div class="form-group">
+					<label for="created_at">Date Ordered: </label>
+					<input type="text" value="{{ o.ordered_at }}" disabled>
+				</div>
+				<div class="form-group">
+					<label for="qty">Quantity: </label>
+					<input type="number" name="qty" min="1" value="{{o.qty}}">
+				</div>
+				<div class="form-group">
+					<label for="mode">Payment method: </label>
+					<input type="text" name="mode" value="{{o.payment_mode}}">
+				</div>
+
+					<button type="submit" class="mt-3 btn btn-primary">Update</button>
+				</form>
+		</div>	
+	</div>
+</div>
+{% endblock %}

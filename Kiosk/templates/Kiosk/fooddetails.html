@@ -1,0 +1,40 @@
+{% extends 'Kiosk/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for message in messages %}
+<div class="form-group">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+	<div class="card form_card">
+		<div class="card-header">
+			<h5 class="card-title">Food Details</h5>
+		</div>
+		<div class="card-body">
+				<h2> {{f.name}} </h2>
+			<p>
+				Description: {{f.description}}
+			</p>
+			<p>
+				Price: {{f.price}}
+			</p>
+			<p>
+				Created at: {{f.created_at}}
+			</p>
+			{% if f.image %}
+				<img src="{{MEDIA_URL}}{{ f.image.url }}" alt="Food imge" class="mb-3" id="food_img">
+			{% endif %}
+			<p>
+				<a  href="{% url 'update_food_details' pk=f.pk %}" class="btn btn-success">Update</a>
+				<a  href="{% url 'delete_food' pk=f.pk %}"class="btn btn-danger">Delete</a>
+			</p>
+		</div>
+	</div>
+</div>
+{% endblock %}

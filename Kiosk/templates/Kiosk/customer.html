@@ -1,0 +1,42 @@
+{% extends 'Kiosk/base.html' %}
+{% load static %}
+
+{% block content %}
+	{% for message in messages %}
+	<div class="form-group">
+		<div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			{{ message }}
+		</div>
+	</div>
+	{% endfor %}
+	<div class="container">
+		<table class="table table-hover">
+			<thead class="thead-dark">
+                <tr>
+				    <th> Name </th>
+				    <th> City </th>
+				    <th> Address </th>
+                    <th> Created At</th>
+                    <th></th>
+                </tr>
+			</thead>
+			<tbody>
+				{% for c in customer %}
+				<tr>
+					<td> {{ c.name }} </td>
+					<td> {{ c.city }} </td>
+					<td> {{ c.address }} </td>
+					<td> {{ c.created_at }} </td>
+					<td><a href="{% url 'view_customer_details' pk=c.pk %}" class="btn btn-dark">Details</button></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div id="container">
+			<a href="{% url 'add_customer' %}" class="btn btn-success mt-5" id="add_button">Add Customer</a>
+		</div>
+	</div>
+{% endblock %}

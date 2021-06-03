@@ -1,0 +1,56 @@
+{% extends 'Kiosk/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for message in messages %}
+<div class="form-group">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<div class="col">
+	<div class="card form_card">
+		<div class="card-header">
+			<h5 class="card-title">Add Order</h5>
+		</div>
+		<div class="card-body">
+			<form method="POST" action="{% url 'add_order' %}">{% csrf_token %}
+				<div class="form-group">
+					<label for="food">Food: </label>
+					<select name="food">
+						{% for f in food %}
+						<option value="{{f.pk}}">{{f.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="qty">Quantity: </label>
+					<input type="number" name="qty" min="1" required>
+				</div>
+				<div class="form-group">
+					<label for="ordered_at">Ordered at: </label>
+					<input type="datetime-local" name="date">
+				</div>
+				<div class="form-group">
+					<label for="cust">Customer</label>
+					<select name="cust" required>
+						{% for c in customers %}
+						<option value="{{c.pk}}">{{c.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="mode">Payment Method: </label>
+					<input type="text" name="mode" required>
+				</div>
+				<button type="submit" class="mt-3 btn btn-primary">Submit</button>
+			</form>
+			
+		</div>
+	</div>
+{% endblock %}

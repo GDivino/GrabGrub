@@ -1,0 +1,39 @@
+{% extends 'Kiosk/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for message in messages %}
+<div class="form-group">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+	<div class="card form_card">
+		<div class="card-header">
+			<h5 class="card-title">Order Details</h5>
+		</div>
+		<div class="card-body">
+				<h2> {{ o.food.name }} </h2>
+			<p>
+				Ordered at: {{o.ordered_at}}
+			</p>
+			<p>
+				Quantity: {{o.qty}}
+			</p>
+			<p>
+				Customer: {{o.cust_order.name}}
+			</p>
+			<p>
+				Payment Method: {{ o.payment_mode }}
+			</p>
+			<p>
+				<a class="btn btn-info" href="{% url 'update_order' pk=o.pk %}">Update</a>
+				<a class="btn btn-danger" href="{% url 'delete_order' pk=o.pk %}">Delete</a>
+			</p>
+		</div>
+</div>
+{% endblock %}
